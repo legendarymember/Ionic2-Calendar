@@ -262,6 +262,7 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnDestroy
     @Input() dateFormatter: IDateFormatter;
     @Input() dir = '';
     @Input() lockSwipeToPrev: boolean;
+    @Input() lockSwipeToNext: boolean;
     @Input() lockSwipes: boolean;
     @Input() sliderOptions: any;
 
@@ -338,6 +339,10 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnDestroy
             this.slider.lockSwipeToPrev(true);
         }
 
+        if (this.lockSwipeToNext) {
+            this.slider.lockSwipeToNext(true);
+        }
+
         if (this.lockSwipes) {
             this.slider.lockSwipes(true);
         }
@@ -403,6 +408,11 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnDestroy
             this.slider.lockSwipeToPrev(lockSwipeToPrev.currentValue);
         }
 
+        const lockSwipeToNext = changes.lockSwipeToNext;
+        if (lockSwipeToNext) {
+            this.slider.lockSwipeToNext(lockSwipeToNext.currentValue);
+        }
+
         const lockSwipes = changes.lockSwipes;
         if (lockSwipes) {
             this.slider.lockSwipes(lockSwipes.currentValue);
@@ -429,6 +439,14 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnDestroy
                 currentSlideIndex = currentViewIndex;
             }
 
+            if (this.lockSwipeToPrev) {
+                (async () => await this.slider.lockSwipeToPrev(false))();
+            }
+
+            if (this.lockSwipeToNext) {
+                (async () => await this.slider.lockSwipeToNext(false))();
+            }
+
             if (currentSlideIndex - currentViewIndex === 1) {
                 direction = 1;
             } else if (currentSlideIndex === 0 && currentViewIndex === 2) {
@@ -442,6 +460,14 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnDestroy
             }
             this.currentViewIndex = currentSlideIndex;
             this.move(direction);
+
+            if (this.lockSwipeToPrev) {
+                (async () => await this.slider.lockSwipeToPrev(true))();
+            }
+
+            if (this.lockSwipeToNext) {
+                (async () => await this.slider.lockSwipeToNext(true))();
+            }
         });
     }
 
