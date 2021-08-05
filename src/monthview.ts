@@ -439,6 +439,14 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnDestroy
                 currentSlideIndex = currentViewIndex;
             }
 
+            if (this.lockSwipeToPrev) {
+                (async () => await this.slider.lockSwipeToPrev(false))();
+            }
+
+            if (this.lockSwipeToNext) {
+                (async () => await this.slider.lockSwipeToNext(false))();
+            }
+
             if (currentSlideIndex - currentViewIndex === 1) {
                 direction = 1;
             } else if (currentSlideIndex === 0 && currentViewIndex === 2) {
@@ -452,6 +460,14 @@ export class MonthViewComponent implements ICalendarComponent, OnInit, OnDestroy
             }
             this.currentViewIndex = currentSlideIndex;
             this.move(direction);
+
+            if (this.lockSwipeToPrev) {
+                (async () => await this.slider.lockSwipeToPrev(true))();
+            }
+
+            if (this.lockSwipeToNext) {
+                (async () => await this.slider.lockSwipeToNext(true))();
+            }
         });
     }
 
