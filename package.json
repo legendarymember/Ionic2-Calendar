@@ -19,7 +19,7 @@
         "build.ng": "ng-packagr -p package.json",
         "build.es2015": "node_modules/.bin/ngc -p tsconfig.json",
         "dev": "tsc --watch",
-        "postinstall": "ngcc"
+        "postinstall": "npm i && ngcc"
     },
     "main": "./index.js",
     "dependencies": {},
